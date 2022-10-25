@@ -9,11 +9,12 @@ class Contenedor {
         try {
             const archivo = await fs.promises.readFile(this.filePath);
             const productos = JSON.parse(archivo);
-            return productos;
+            return (productos);
         } catch (e) {
             console.log(e);
         }
     };
+
     save = async (producto) => {
         try {
             const productos = await this.getAll();
@@ -29,6 +30,7 @@ class Contenedor {
             );
         } catch (e) {}
     };
+
     getById = async (id) => {
         try {
             const dataRecuperada = await this.getAll();
@@ -72,10 +74,7 @@ class Contenedor {
 };
 
 const contenedor = new Contenedor();
-console.log(
-    contenedor.save({
-        title: "Producto",
-        price: 150,
-        id: 0,
-    })
-);
+
+console.log(contenedor.getAll());
+
+module.exports = Contenedor;

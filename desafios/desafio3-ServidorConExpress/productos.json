@@ -1,0 +1,19 @@
+[
+    {
+        "title": "pelota",
+        "price": 50,
+        "id": 1
+    },
+
+    {
+        "title": "botines",
+        "price": 150,
+        "id": 2
+    },
+
+    {
+        "title": "camiseta",
+        "price": 100,
+        "id": 3
+    }
+]
