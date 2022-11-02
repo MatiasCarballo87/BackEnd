@@ -24,7 +24,7 @@ class Contenedor {
                     : productos[productos.length - 1].id + 1;
             producto.id = id;
             productos.push(producto);
-            await fs.promises.writeFile(
+            fs.promises.writeFile(
                 this.filePath,
                 JSON.stringify(productos, null)
             );
@@ -34,12 +34,8 @@ class Contenedor {
     getById = async (id) => {
         try {
             const dataRecuperada = await this.getAll();
-            const dataNueva = dataRecuperada.filter((data) => data.id === id);
-            if (dataNueva !== id) {
-                console.log("No existe producto con ese id");
-            } else {
-                console.log(dataNueva);
-            }
+            const dataNueva = dataRecuperada.find((data) => data.id == id);
+            return dataNueva;
         } catch (e) {
             console.log(e);
         }
@@ -51,7 +47,7 @@ class Contenedor {
             const productoEncontrado = productos.find((e) => e.id == id);
             if (!productoEncontrado) return console.log("el id no existe");
             const productosFiltrados = productos.filter((e) => e.id != id);
-            await fs.promises.writeFile(
+            fs.promises.writeFile(
                 this.filePath,
                 JSON.stringify(productosFiltrados, null)
             );
@@ -59,7 +55,8 @@ class Contenedor {
         } catch (e) {
             console.log(e);
         }
-    }
+    }; 
+    
     deleteAll = async () => {
         try {
             await fs.promises.writeFile(
