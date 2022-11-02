@@ -48,13 +48,12 @@ routerProductos.post('/', async (req, res) => {
 });
 
 routerProductos.put('/:id', async (req, res) => {
-    const id = req.params.id;
-    const body = req.body;
-    const productoModificado = await contenedor.getById(id);
-    if (productoModificado){
-        contenedor[productoModificado] = body;
-        res.json({ success: true, item: body });
-    }else {
+   try{ 
+        const id = req.params.id;
+        const { title, price, thumbnail }= req.body;
+        await contenedor.updateById(id, title, price, thumbnail);
+        res.json('producto actualizado');
+    }catch (error){
         res.json({ error: 'producto no encontrado' });
     }
 });

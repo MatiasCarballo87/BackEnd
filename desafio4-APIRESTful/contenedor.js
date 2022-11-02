@@ -38,7 +38,7 @@ class Contenedor {
             return dataNueva;
         } catch (e) {
             console.log(e);
-        }
+        }  
     };
 
     async deleteById(id) {
@@ -68,6 +68,29 @@ class Contenedor {
             console.log(e);
         }
     };
+
+    updateById = async (id, title, price, thumbnail) => {
+        try {
+            const productos = await this.getAll();
+            const item = productos.find((prod) => prod.id == id);
+            if (item) {
+                item.title = title;
+                item.price = price;
+                item.thumbnail = thumbnail;
+                console.log(item);
+                await fs.promises.writeFile(
+                    this.filePath,
+                    JSON.stringify(productos, null, 2)
+                );
+                return item;
+            } else {
+                return { error: "Producto no encontrado" };
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
 };
 
 const contenedor = new Contenedor();
