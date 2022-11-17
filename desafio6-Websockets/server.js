@@ -4,6 +4,8 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const Contenedor = require('./contenedor');
 const contenedor = new Contenedor();
+const ContenedorMsg = require('./contenedorMsg');
+const contenedorMsg = new ContenedorMsg();
 
 //IMPLEMENTACION
 const httpServer = require("http").createServer(app);
@@ -20,33 +22,41 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-app.post("/", async (req, res) => {
+/* app.post("/", async (req, res) => {
     const { body } = req;
     await contenedor.save(body);
     res.sendFile(__dirname + "/index.html");
-});
+}); */
 
-let chat = [];
+//cuando se conecta un cliente
 
-io.on("connect", (socket) => {
+io.on("connect", async (socket) => {
 
-  socket.on("msgChat", (data) => {
-    chat.push({
-        email: data.email,
-        fecha: data.fecha,
-        mensaje: data.mensaje,
-    });
-    contenedor.saveMsgs(chat);
-    io.sockets.emit("msgChat", chat);
+  console.log(`nuevo cliente conectado ${socket.id}`)
+
+  // se muestra la lista completa de productos
+  socket.emit("productList", await contenedor.getAll());
+  // se muestra el historial completo de mensajes
+  socket.emit("msgList", await contenedorMsg.getAll());
+
+  // recibe productos del cliente
+  socket.on("product", async (data) => {
+    // guarda los productos en el json products
+    await contenedor.save(data);
+    // muestra el mensaje por consola
+    console.log("Se recibio un producto nuevo", "producto: ", data);
+    //devuelve el historial completo con el nuevo producto
+    io.emit("productList", await contenedor.getAll());
   });
 
-//no funciona el products
-  socket.on("products", (data) => {
-    todos.push({
-      title: data.title,
-      price: data.price,
-      thumbnail: data.thumbnail,
-    })
-    io.sockets.emit("products", todos);
+  socket.on("msg", async (data) => {
+    //guarda el mensaje nuevo en el chat.json
+    await contenedorMsg.save({ socketid: socket.id, timestamp: timestamp, ...data});
+    //muestra el mensaje por consola
+    console.log("se recibio un msg nuevo", "mensaje: ", data);
+    //devuelve el historial completo al cliente con el nuevo msg
+    io.emit("msgList", await contenedorMsg.getAll());
   });
+
+
 });
