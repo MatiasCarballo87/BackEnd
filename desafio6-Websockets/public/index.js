@@ -4,10 +4,12 @@ function sendProduct() {
     const nombre = document.getElementById("title").value;
     const precio = document.getElementById("price").value;
     const foto = document.getElementById("thumbnail").value;
-    socket.emit("product", { Title: nombre, Price: precio, URL: foto });
+    socket.emit("product", { title: nombre, price: precio, thumbnail: foto });
+    return false;
 };
 
-socket.on("product", (data) => {
+socket.on("productList", (data) => {
+    console.log(data)
     let productos = "";
     data.forEach(element => {
         productos += `
@@ -34,7 +36,8 @@ socket.on("product", (data) => {
 function sendMsg() {
     const email = document.getElementById("input-email").value;
     const msgParaEnvio = document.getElementById("input-msg").value;
-    socket.emit("msgChat", { email: email, mensaje: msgParaEnvio });
+    socket.emit("msg", { email: email, mensaje: msgParaEnvio });
+    return false;
 }
 
 socket.on("msgList", (data) => {
@@ -42,7 +45,7 @@ socket.on("msgList", (data) => {
     data.forEach(element => {
         html += `
             <div>
-                ${element.email} ${element.timestamp} dijo: ${element.mensaje}
+                <span class="chatMail"><strong>${element.email}</strong></span> <span class="chatTime">[${element.timestamp}]</span> <span class="chatMsg">${element.mensaje}</span>
             </div>
         `
     });

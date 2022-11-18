@@ -5,11 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Page Title</title>
         <link rel="stylesheet" href="/style.css" />
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/index.js"></script>
     </head>
     <body>
         <h1>Formulario</h1>
+        <h2>Ingrese un Producto</h2>
         <div class="container">
             <form onsubmit="sendProduct(); return false;" class="formulario">
                 <label>Title</label>
@@ -18,17 +17,22 @@
                 <input type="number" id="price">
                 <label>URL</label>
                 <input type="text" id="thumbnail" >
-                <input type="submit" value="Enviar"/>
+                <input type="submit" class="btnEnviar" value="Enviar"/>
             </form>
         </div>  
         <div id="productosContainer"></div>
+        <h2>Centro de Mensajes</h2>
         <div class="inputsChat">
             <form onsubmit="sendMsg(); return false;">
+                <label>Email:</label>
                 <input id="input-email" /><br/>
-                <input id="input-msg" />
-                <input type="submit" value="Enviar" />
+                <label>Mensaje:</label>
+                <input id="input-msg" /><br/>
+                <input type="submit" class="btnEnviar" value="Enviar" />
             </form>
         </div>
         <div id="chatContainer"></div>
     </body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/index.js"></script>
 </html>

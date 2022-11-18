@@ -32,7 +32,7 @@ class Contenedor {
             console.log(`se guardo el producto con el id ${id}`);
         } catch (e) {}
     };
-/* 
+
     getById = async (id) => {
         try {
             const dataRecuperada = await this.getAll();
@@ -91,12 +91,12 @@ class Contenedor {
         } catch (error) {
             console.log(error);
         }
-    }; */
+    };
     
 };
 
 const contenedor = new Contenedor();
 
-console.log(contenedor.getAll());
+/* console.log(contenedor.getAll()); */
 
 module.exports = Contenedor;

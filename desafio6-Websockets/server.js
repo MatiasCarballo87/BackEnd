@@ -22,11 +22,8 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-/* app.post("/", async (req, res) => {
-    const { body } = req;
-    await contenedor.save(body);
-    res.sendFile(__dirname + "/index.html");
-}); */
+const moment = require('moment');
+const timestamp = moment().format('h:mm a');
 
 //cuando se conecta un cliente
 
@@ -57,6 +54,5 @@ io.on("connect", async (socket) => {
     //devuelve el historial completo al cliente con el nuevo msg
     io.emit("msgList", await contenedorMsg.getAll());
   });
-
 
 });

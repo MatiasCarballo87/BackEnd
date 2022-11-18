@@ -16,19 +16,18 @@ class ContenedorMsg {
         }
     };
 
-    save = async (producto) => {
+    save = async (mensaje) => {
         try {
-            const productos = await this.getAll();
+            const mensajes = await this.getAll();
             const id =
-                productos.length === 0
+                mensajes.length === 0
                     ? 1
-                    : productos[productos.length - 1].id + 1;
-            producto.id = id;
-            productos.push(producto);
-
+                    : mensajes[mensajes.length - 1].id + 1;
+            mensaje.id = id;
+            mensajes.push(mensaje);
             await fs.promises.writeFile(
                 this.filePath,
-                JSON.stringify(productos, null)
+                JSON.stringify(mensajes, null)
             );
             console.log(`se guardo el mensaje con el id ${id}`);
         } catch (e) {}
