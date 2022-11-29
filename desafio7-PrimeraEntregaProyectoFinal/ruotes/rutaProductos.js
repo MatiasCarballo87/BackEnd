@@ -21,7 +21,7 @@ rutaProductos.get('/:id', async (req, res) => {
     }
 });
 
-rutaProductos.post('/', /* (req, res) => {
+rutaProductos.post('/', (req, res, next) => {
     if (admin == true) {
         next();
     } else {
@@ -29,27 +29,27 @@ rutaProductos.post('/', /* (req, res) => {
             error: true, description: 'no autorizado', metodo: 'solo para administradores',
         });
     }
-    },  */
+    }, 
     async (req, res) => {
         const { body } = req;
         let productoFormato = new ProductoFormato(
             body.nombre,
-            body.description,
-            body.thumbnail,
             body.precio,
-            body.stock,
-            body.codigo
+            body.foto,
+            body.descripcion,
+            body.codigo,
+            body.stock
         );
         try {
-            await productos.save({...productoFormato});
-            res.json("Producto agregado correctamente")
+            await productos.save(productoFormato);
+            res.json("Producto guardado correctamente")
         }catch {
             res.json({ error: 'No se pudo agregar el producto'});
         }
         
 });
 
-rutaProductos.put('/:id', /* (req, res) => {
+rutaProductos.put('/:id', (req, res, next) => {
         if (admin == true) {
             next();
         } else {
@@ -57,7 +57,7 @@ rutaProductos.put('/:id', /* (req, res) => {
                 error: true, description: 'no autorizado', metodo: 'solo para administradores',
             });
         }
-    },  */
+    }, 
     async (req, res) => {
     try{ 
         const id = req.params.id;
@@ -69,7 +69,7 @@ rutaProductos.put('/:id', /* (req, res) => {
     }
 });
 
-rutaProductos.delete('/:id', /* (req, res) => {
+rutaProductos.delete('/:id', (req, res, next) => {
         if (admin == true) {
             next();
         } else {
@@ -77,7 +77,7 @@ rutaProductos.delete('/:id', /* (req, res) => {
                 error: true, description: 'no autorizado', metodo: 'solo para administradores',
             });
         }
-    },  */
+    }, 
     async (req, res) => {
         const { id } = req.params;
         await productos.deleteById(id);

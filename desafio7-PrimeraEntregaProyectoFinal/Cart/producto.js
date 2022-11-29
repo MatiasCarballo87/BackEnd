@@ -2,14 +2,14 @@ const moment = require('moment');
 const timestamp = moment().format('h:mm a');
 
 class ProductoFormato {
-    constructor(nombre, description, thumbnail, precio, stock, codigo) {
-        this.timestamp = timestamp;
+    constructor( nombre, precio, foto, descripcion, codigo, stock ) {
         this.nombre = nombre || "";
-        this.description = description || "";
-        this.thumbnail = thumbnail || "";
         this.precio = precio || "";
-        this.stock = stock || "";
+        this.foto = foto || "";
+        this.descripcion = descripcion || "";
         this.codigo = codigo || "";
+        this.stock = stock || "";
+        this.timestamp = timestamp;
     }
 }
 

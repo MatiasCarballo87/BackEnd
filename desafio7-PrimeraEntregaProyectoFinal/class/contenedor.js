@@ -27,7 +27,7 @@ class Contenedor {
             productos.push(producto);
             await fs.promises.writeFile(
                 this.filePath,
-                JSON.stringify(productos, null)
+                JSON.stringify(productos, null, 3)
             );
         } catch (e) {}
     };
@@ -70,7 +70,7 @@ class Contenedor {
         }
     };
 
-    update(element) {
+/*     update(element) {
         try {
             let one = this.elements.find((el) => el.id == element.id);
 
@@ -93,17 +93,18 @@ class Contenedor {
             console.log(error);
             return { response: "Error!", error };
         }
-    }
+    } */
 
-   /*  updateCartById = (id, timestamp, productos) => {
+    updateCartById = async (id, timestamp, productos) => {
         try {
-            const productos = this.getAll();
-            const isInProductsList = productos.find(prod => Number(prod.id) === Number(id));
-            const indexItem = productos.findIndex((prod) => Number(prod.id) === Number(id));
+            const products = await this.getAll();
+            const isInProductsList = products.find(prod => Number(prod.id) === Number(id));
+            const indexItem = products.findIndex((prod) => Number(prod.id) === Number(id));
             if (isInProductsList != undefined) {
-                const objeto = { id: id, timestamp: timestamp, productos: productos};
-                productos[indexItem] = objeto;
-                fs.writeFileSync(this.filePath, JSON.stringify(productos, null, 2));
+                const objeto = { timestamp: timestamp, productos: productos, id: id };
+                products[indexItem] = objeto;
+                console.log(objeto);
+                fs.writeFileSync(this.filePath, JSON.stringify(products, null, 2));
                 return true;
             } else {
                 return false;
@@ -111,7 +112,7 @@ class Contenedor {
         }catch ( error ) {
             console.log("error");
         }
-    }; */
+    };
 
     updateById = async (id, nombre, precio, foto, stock, descripcion, codigo) => {
         try {

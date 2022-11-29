@@ -28,31 +28,25 @@ rutaCarrito.get('/:id/productos', async (req, res) => {
     }
 });
 
-rutaCarrito.post('/:id/productos', (req, res) => {
-    const { id } = req.params;
-    const cart = carrito.getById(id);
-    const body = req.body.id_prod;
-    const products = body.forEach((id_prod) => {
-        const prod = productosGuardados.getById(id_prod);
-        cart.productosGuardados.push(prod)
-    })
-    const newCart = carrito.update(cart);
-    res.json({res: "Producto añadido al carrito", cart: newCart});
+rutaCarrito.post('/:id/productos/:id_prod', async (req, res) => {
+    const { id, id_prod } = req.params;
+    const productoPedido = await productosGuardados.getById(id_prod);
+    const allCarts = await carrito.getAll();
+    const carritoPedido = allCarts.find((item) => Number(item.id) == Number(id));
+    const nuevoProducto = [...carritoPedido.productos, productoPedido];
+    carrito.updateCartById(carritoPedido.id, carritoPedido.timestamp, nuevoProducto);
+    res.json({ succes: true, msg: "Producto añadido" });
 });
 
-rutaCarrito.delete('/:id/productos/:id_prod', (req, res) => {
+rutaCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
     const { id, id_prod } = req.params;
-    const cart = carrito.getById(id);
-    cart.productos.findIndex((el, ind) => {
-        if(el.id == id_prod) {
-            return true;
-        }
-    });
+    const cart = await carrito.getById(id);
+    const elementIndex = cart.productos.findIndex((el) => el.id == id_prod);
+    cart.productos.splice(elementIndex, 1);
+    res.json( `Se elimino del carrito ${id} el producto con el Id ${id_prod}`);
 
-    const productoBorrado = cart.productos.filter((prod, ind) => prod.id != id_prod);
-    cart.productos = productoBorrado;
-    carrito.update(cart);
-    res.json("Producto eliminado");
+    const carritoActual = await carrito.updateCartById(id, cart.productos, cart.timestamp);
+    res.json({cart: carritoActual});
 });
 
 module.exports = rutaCarrito;
