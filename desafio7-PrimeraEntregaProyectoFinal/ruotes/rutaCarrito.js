@@ -45,8 +45,8 @@ rutaCarrito.delete('/:id/productos/:id_prod', async (req, res) => {
     cart.productos.splice(elementIndex, 1);
     res.json( `Se elimino del carrito ${id} el producto con el Id ${id_prod}`);
 
-    const carritoActual = await carrito.updateCartById(id, cart.productos, cart.timestamp);
+    const carritoActual = await carrito.updateCartById(id, cart.timestamp, cart.productos);
     res.json({cart: carritoActual});
 });
-
+ 
 module.exports = rutaCarrito;

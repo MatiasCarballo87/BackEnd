@@ -27,19 +27,8 @@
   },
   {
     "timestamp": "8:31 pm",
-    "productos": [
-      {
-        "nombre": "Pelota",
-        "precio": 100,
-        "foto": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/28530d07245942fc944dae680084fb30_9366/Pelota_Al_Rihla_Pro_Blanco_H57783_01_standard.jpg",
-        "descripcion": "Pelota oficial Mundial 2022",
-        "codigo": 900,
-        "stock": 20,
-        "id": 3,
-        "timestamp": "3:50 pm"
-      }
-    ],
-    "id": 2
+    "productos": [],
+    "id": "2"
   },
   {
     "timestamp": "8:32 pm",
