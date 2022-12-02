@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "chat": "node utils/msgSQlite.js",
+    "productos": "node utils/productosMySQL.js"
   },
   "keywords": [],
   "author": "",

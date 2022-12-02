@@ -7,7 +7,8 @@ knex.schema
             table.string("email"),
             table.string("timestamp"),
             table.string("mensaje");
-    })
+            table.string("socketid");
+        })
     .then(() => {
         console.log("La tabla se creo correctamente");
     })

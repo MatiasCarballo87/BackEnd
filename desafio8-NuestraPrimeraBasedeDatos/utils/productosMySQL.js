@@ -28,7 +28,7 @@ knex.schema
             {"title":"canilleras","price":"32","thumbnail":"https://redsport.vteximg.com.br/arquivos/ids/1113593-1000-1000/GA050004704.jpg?v=637922756979530000","id":5}
         ])
         .then(() => {
-            console.log("Se insertaron los mensajes");
+            console.log("Se insertaron los productos");
         })
         .catch((err) => {
             console.log(err);
